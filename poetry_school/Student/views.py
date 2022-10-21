@@ -52,9 +52,9 @@ class StudentViewParams(View):
     
     def put(self, request, *args, **kwargs):
         st = json.loads(request.body)
-        fn = request.GET.get('fn')
-        print(fn)
-        Student.objects.filter(first_name = fn).update(
+        to = request.GET.get('pk')
+        print(to)
+        Student.objects.filter(pk = to).update(
             first_name = st['first_name'], 
             last_name = st['last_name'],
             age = st['age'],
@@ -66,8 +66,8 @@ class StudentViewParams(View):
     
     def delete(self, request, *args, **kwargs):
         st = json.loads(request.body)
-        fn = request.GET.get('fn')
-        Student.objects.filter(pk = fn).delete()
+        to = request.GET.get('pk')
+        Student.objects.filter(pk = to).delete()
 
         data = serializers.serialize('json', Student.objects.all())
         return JsonResponse(json.loads(data), safe= False)
